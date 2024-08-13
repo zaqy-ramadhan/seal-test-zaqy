@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiLogOut, FiUser } from 'react-icons/fi'; // Import additional icons
-import { logout } from '../services/api';
-import { fetchAdmin } from '../services/api';
+import { FiLogOut, FiUser, FiMoon, FiSun, FiComputer } from 'react-icons/fi';
+import { logout, fetchAdmin } from '../services/api';
 
-const Navigation = ({ onLogout }) => {
+const Navigation = ({ user, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); // State for loading
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -26,17 +25,28 @@ const Navigation = ({ onLogout }) => {
 
     const fetchUserData = async () => {
         try {
-            const response = await fetchAdmin(); // Implement this function to get user data
-            setUser(response.data);
+            const response = await fetchAdmin(); // Fetch user data
+            // If response.data contains user data, set it to user
+            if (response.data) {
+                // Update user data if needed
+            } else {
+                // Handle the case when no user data is found
+            }
         } catch (error) {
             console.error('Error fetching user data:', error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchUserData();
-    }, [user]);
-    
+    }, []);
+
+
+    if (loading) {
+        return <div className="bg-gray-800 text-white p-4 shadow-md">Loading...</div>;
+    }
 
     return (
         <nav className="bg-gray-800 text-white p-4 shadow-md">

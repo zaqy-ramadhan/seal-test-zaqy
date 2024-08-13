@@ -7,11 +7,10 @@ import Navigation from './components/Navigation'; // Make sure to import the Nav
 
 const App = () => {
     const [user, setUser] = useState(null);
-    const token = localStorage.getItem("token");
-    console.log(token);
     useEffect(() => {
-        // Retrieve user information from local storage
         const storedUser = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

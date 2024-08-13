@@ -13,7 +13,7 @@ const EditAdminPage = () => {
         const fetchAdminData = async () => {
             try {
                 const response = await fetchAdmin();
-                console.log('Admin data:', response.data); // Log response data
+                // console.log('Admin data:', response.data); // Log response data
                 setAdmin(response.data);
                 setName(response.data?.name || ''); // Handle undefined
                 setEmail(response.data?.email || ''); // Handle undefined
@@ -28,7 +28,7 @@ const EditAdminPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitting data:', { name, email, id }); // Log the data being sent
+        // console.log('Submitting data:', { name, email, id }); // Log the data being sent
         try {
             await updateAdmin({ name, email }, id);
             alert('Admin updated successfully.');

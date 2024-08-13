@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import LoginPage from './pages/LoginPage';
+import EmployeePage from './pages/EmployeePage';
+import EditAdminPage from './pages/EditAdminPage';
+import Navigation from './components/Navigation'; // Make sure to import the Navigation component
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [user, setUser] = useState(null);
+    const token = localStorage.getItem("token");
+    console.log(token);
+    useEffect(() => {
+        // Retrieve user information from local storage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const handleLogin = (user) => {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem('user');
+    };
+
+    return (
+        <Router>
+            <Navigation user={user} onLogout={handleLogout} />
+            <Routes>
+                <Route
+                    path="/"
+                    element={user ? <Navigate to="/employees" /> : <LoginPage onLogin={handleLogin} />}
+                />
+                <Route
+                    path="/login"
+                    element={user ? <Navigate to="/employees" /> : <LoginPage onLogin={handleLogin} />}
+                />
+                <Route
+                    path="/employees/*"
+                    element={user ? <EmployeePage /> : <Navigate to="/login" />}
+                />
+                <Route
+                    path="/admin/edit"
+                    element={user ? <EditAdminPage /> : <Navigate to="/login" />}
+                />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;

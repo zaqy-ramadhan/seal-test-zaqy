@@ -21,9 +21,5 @@ class DatabaseSeeder extends Seeder
             'phone' => '1234567890',
             'password' => Hash::make('pastibisa'),
         ]);
-
-        $this->call(DivisionSeeder::class);
-        $this->call(EmployeesSeeder::class);
-
     }
 }

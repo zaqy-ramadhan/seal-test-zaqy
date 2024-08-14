@@ -5,7 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 
 Route::post('/login', [AuthController::class, 'login']);
-// Rute dengan autentikasi
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users', [AuthController::class, 'create']);
     Route::post('/logout', [AuthController::class, 'logout']);

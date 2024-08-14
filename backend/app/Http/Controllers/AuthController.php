@@ -70,7 +70,6 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        // dd($request->name);
         if ($request->hasFile('avatar')) {
 
             if ($user->avatar) {
@@ -81,7 +80,6 @@ class AuthController extends Controller
             $user->avatar = $avatarPath;
         }
     
-        // Update user data
         $user->name = $request->name;
         $user->username = $request->username;
         $user->phone = $request->phone;
@@ -105,7 +103,6 @@ class AuthController extends Controller
 
     public function create(Request $request)
     {
-        // dd($request->name);
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
